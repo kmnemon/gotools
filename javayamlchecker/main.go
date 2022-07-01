@@ -2,54 +2,18 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"reflect"
-
-	"gopkg.in/yaml.v3"
+	"yamler/yamlparse"
 )
 
-var data = `
-schedule:
-  admin:
-    address: http://123456
-  executor:
-    appname: epms-fss-test
-`
-
-func yamlParse(data string) {
-	m := make(map[interface{}]interface{})
-
-	err := yaml.Unmarshal([]byte(data), &m)
-	if err != nil {
-		log.Fatalf("error: %v", err)
-	}
-	fmt.Printf("--- m:\n%v\n\n", m)
-	mapFlat(m)
-
-}
-
-func mapFlat(in map[interface{}]interface{}) map[string]string {
-	for k, v := range in {
-
-	}
-}
-
-var flatData map[string]string
-
-func mapFlatttt(in map[interface{}]interface{}) interface{} {
-	for _, v := range in {
-		switch v := v.(type) {
-		case string:
-			return v
-		case map[interface{}]interface{}:
-			mapFlatttt(v)
-		default:
-			fmt.Println("unknown type,%s: %s", reflect.TypeOf(v), v)
-		}
-	}
-}
-
 func main() {
-	yamlparse(data)
+	var yamlPath1 string = "/Users/keliu/tmp/1.yaml"
+	yamlparse.YamlParse(yamlPath1)
+	var flatData1 map[string]string = yamlparse.FlatData
 
+	var yamlPath2 string = "/Users/keliu/tmp/1.yaml"
+	yamlparse.YamlParse(yamlPath2)
+	var flatData2 map[string]string = yamlparse.FlatData
+
+	fmt.Println(flatData1)
+	fmt.Println(flatData2)
 }
