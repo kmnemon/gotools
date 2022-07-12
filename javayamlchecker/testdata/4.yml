@@ -1,0 +1,5 @@
+schedule:
+  admin:
+    address: 123123
+  executor:
+    appname: 123

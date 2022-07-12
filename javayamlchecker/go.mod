@@ -1,4 +1,4 @@
-module yamler
+module yamlchecker
 
 go 1.18
 

@@ -1,0 +1,6 @@
+schedule:
+  admin:
+    address: http://123456
+  executor:
+    appname: epms-fss-test
+    appname2: epms-fss-test2

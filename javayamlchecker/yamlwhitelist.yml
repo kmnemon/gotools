@@ -1,0 +1,6 @@
+mybatis-plus: all
+server.port: all
+eureka: all
+log.print.request.always: all
+knife4j.production: all
+spring.security: all

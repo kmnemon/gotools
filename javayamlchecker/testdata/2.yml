@@ -1,0 +1,6 @@
+schedule:
+  admin:
+    address: 123
+  executor:
+    appname: true
+    appname2: 12.03
