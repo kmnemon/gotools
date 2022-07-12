@@ -18,8 +18,7 @@ Usage:
 Check Scope:
 	1. A == B
 	2. A have some configure item that B don't have and vice visa
-	3. either A, B or both have null values
-
+	3. either A, B or both have null values.
 	to report bugs, please contact the author: 
 	liuke978
 
