@@ -19,3 +19,11 @@ func TestYamlParse(t *testing.T) {
 	}
 
 }
+
+func TestYamlFileRead(t *testing.T) {
+	data := yamlFileRead("../testdata/1.yml")
+	if data == nil {
+		t.Error("yamlfile read have something wrong")
+	}
+
+}

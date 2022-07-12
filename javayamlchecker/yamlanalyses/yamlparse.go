@@ -2,29 +2,17 @@ package yamlanalyses
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"gopkg.in/yaml.v3"
 )
 
 func yamlParse(yamlPath string) (flatData map[string]interface{}) {
-	data, err := os.ReadFile(yamlPath)
-	if err != nil {
-		fmt.Println("read yaml failed: ", err)
-		return
-	}
-
-	m := make(map[string]interface{})
-	err = yaml.Unmarshal([]byte(data), &m)
-	if err != nil {
-		log.Fatalf("error: %v", err)
-		return
-	}
+	m := yamlFileRead(yamlPath)
 	// fmt.Println(m)
 	var key string
 	flatData = make(map[string]interface{})
-	mapFlat(&m, key, &flatData)
+	mapFlat(m, key, &flatData)
 	return
 }
 
@@ -40,4 +28,20 @@ func mapFlat(in *map[string]interface{}, key string, flatData *map[string]interf
 			fmt.Println("type error")
 		}
 	}
+}
+
+func yamlFileRead(yamlPath string) *map[string]interface{} {
+	data, err := os.ReadFile(yamlPath)
+	if err != nil {
+		fmt.Println("read yaml file failed: ", err)
+		os.Exit(-1)
+	}
+	m := make(map[string]interface{})
+	err = yaml.Unmarshal([]byte(data), &m)
+	if err != nil {
+		fmt.Println("error: ", err)
+		os.Exit(-1)
+	}
+
+	return &m
 }
