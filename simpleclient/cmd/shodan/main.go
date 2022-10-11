@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	const API_KEY = "keke1"
+	const API_KEY = "keke"
 
 	client := shodan.New(API_KEY)
 	apiInfo, err := client.APIInfo()
@@ -15,6 +15,6 @@ func main() {
 		return
 	}
 
-	fmt.Println(apiInfo)
+	fmt.Printf("%#v", apiInfo)
 
 }

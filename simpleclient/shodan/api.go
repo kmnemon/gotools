@@ -22,11 +22,6 @@ func (s *Client) APIInfo() (*APIInfo, error) {
 	}
 	defer res.Body.Close()
 
-	value := res.Request.URL.Query().Get("key")
-	if value != "keke" {
-		return nil, fmt.Errorf("invalid key %q", value)
-	}
-
 	var ret APIInfo
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
