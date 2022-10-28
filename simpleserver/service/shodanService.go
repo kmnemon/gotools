@@ -3,7 +3,9 @@ package service
 import (
 	. "simpleserver/shodan"
 )
-
+/*
+#cgo CFLAGS: -fno-debug	
+*/
 func ApiInfoService() *APIInfo {
 	return &APIInfo{
 		QueryCredits: 3,

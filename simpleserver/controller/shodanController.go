@@ -26,3 +26,7 @@ func ApiInfo(w http.ResponseWriter, r *http.Request) {
 
 	w.Write(apiInfoJson)
 }
+
+func Search(w http.ResponseWriter, r *http.Request) {
+
+}

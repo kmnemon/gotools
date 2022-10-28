@@ -1,0 +1,2 @@
+{"keke" : {"query_credits": 56, "scan_credits": 0, "telnet": true, "plan": "edu", "https": true, "unlocked": true}}
+{"other" : {"query_credits": 33, "scan_credits": 2, "telnet": true, "plan": "org", "https": false, "unlocked": true}}
