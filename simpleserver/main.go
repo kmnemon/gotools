@@ -33,31 +33,5 @@ func main() {
 
 }
 
-func FindByPrimaryKey(key string, db string) (string, bool) {
-	f, err := os.Open(db)
-	if err != nil {
-		fmt.Println("err to open file")
-	}
-	defer f.Close()
 
-	r := bufio.NewReader(f)
 
-	var line []byte
-	var str string
-	var ok bool
-
-	for err == nil && !ok {
-		line, _, err = r.ReadLine()
-		str, ok = findStringByPrimaryKey(key, string(line))
-	}
-
-	return str, ok
-}
-
-func findStringByPrimaryKey(key string, line string) (string, bool) {
-	i := strings.Index(":", line)
-	fmt.Println(i)
-	fmt.Println(line)
-
-	return line, false
-}
