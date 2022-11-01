@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type APIInfo struct {
@@ -16,7 +17,10 @@ type APIInfo struct {
 }
 
 func (s *Client) APIInfo() (*APIInfo, error) {
-	res, err := http.Get(fmt.Sprintf("%s/api-info?key=%s", BaseURL, s.apiKey))
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	res, err := client.Get(fmt.Sprintf("%s/api-info?key=%s", BaseURL, s.apiKey))
 	if err != nil {
 		return nil, err
 	}

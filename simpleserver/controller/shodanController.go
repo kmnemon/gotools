@@ -1,30 +1,27 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"simpleserver/service"
-	. "simpleserver/shodan"
 )
 
 func ApiInfo(w http.ResponseWriter, r *http.Request) {
-	value := r.URL.Query().Get("key")
-	if value != "keke" {
+	key := r.URL.Query().Get("key")
+	if key == "" {
 		w.WriteHeader(403)
-		fmt.Fprintf(w, "invalid key: %q\n", value)
+		fmt.Fprintf(w, "invalid key: %q\n", key)
 		return
 	}
 
-	var apiInfo APIInfo = *service.ApiInfoService()
-
-	apiInfoJson, err := json.MarshalIndent(&apiInfo, "", "\t")
-	if err != nil {
-		fmt.Println("Failed to marshal APIInfo: ", err)
+	data, ok := service.FindByPrimaryKeyService(key)
+	if !ok {
+		w.WriteHeader(403)
+		fmt.Fprintf(w, "invalid key: %q\n", key)
 		return
 	}
 
-	w.Write(apiInfoJson)
+	w.Write(data)
 }
 
 func Search(w http.ResponseWriter, r *http.Request) {
