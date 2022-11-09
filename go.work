@@ -3,3 +3,4 @@ go 1.19
 use ./javayamlchecker/
 use ./simpleserver/
 use ./simpleclient/
+use ./roundrobin/
