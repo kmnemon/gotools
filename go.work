@@ -4,3 +4,10 @@ use ./javayamlchecker/
 use ./simpleserver/
 use ./simpleclient/
 use ./roundrobin/
+use ./gorillaserver/
+use ./harvestserver/
+use ./websocketserver/
+use ./websocketclient/
+use ./tcpsocket/
+use ./udpsocketserver/
+use ./udpsocketclient/
