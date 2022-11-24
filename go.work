@@ -3,3 +3,10 @@ go 1.19
 use ./javayamlchecker/
 use ./simpleserver/
 use ./simpleclient/
+use ./roundrobin/
+use ./gorillaserver/
+use ./harvestserver/
+use ./websocketserver/
+use ./tcpsocket/
+use ./udpsocketserver/
+use ./udpsocketclient/

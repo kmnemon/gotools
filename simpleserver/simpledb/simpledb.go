@@ -36,9 +36,6 @@ func FindByPrimaryKey(db string, key string) ([]byte, bool) {
 	var rs []byte
 	var ok bool
 
-	fmt.Println(rs)
-	fmt.Println(ok)
-
 	for !ok {
 		line, _, err = r.ReadLine()
 		if err != nil {
