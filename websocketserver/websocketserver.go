@@ -1,62 +1,62 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
-	"text/template"
 
-	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
 
-var (
-	upgrader = websocket.Upgrader{ //2
-		CheckOrigin: func(r *http.Request) bool { return true },
-	}
-
-	listenAddr string
-	wsAddr     string  
-	jsTemplate *template.Template
-)
-
-func init() {
-	flag.StringVar(&listenAddr, "listen-addr", "", "Address to listen on")
-	flag.StringVar(&wsAddr, "ws-addr", "", "address for websocket connection")
-	flag.Parse()
-	var err error
-	jsTemplate, err = template.ParseFiles("logger.js") //3
-	if err != nil {
-		panic(err)
-	}
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
 }
 
-func serveWS(w http.ResponseWriter, r *http.Request) {
-	conn, err := upgrader.Upgrade(w, r, nil) //4
+func wsEndpoint(w http.ResponseWriter, r *http.Request) {
+	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
+
+	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		http.Error(w, "", 500)
-		return
+		log.Println(err)
 	}
-	defer conn.Close()
-	fmt.Printf("Connection from %s\n", conn.RemoteAddr().String())
+	defer ws.Close()
+
+	log.Println("client connected")
+	err = ws.WriteMessage(1, []byte("hi client!"))
+	if err != nil {
+		log.Println(err)
+	}
+
+	reader(ws)
+}
+
+func reader(conn *websocket.Conn) {
 	for {
-		_, msg, err := conn.ReadMessage() //5
+		messageType, p, err := conn.ReadMessage()
 		if err != nil {
+			log.Println(err)
 			return
 		}
-		fmt.Printf("From %s:%s\n", conn.RemoteAddr().String(), string(msg)) //6
-	}
-}
 
-func serveFile(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/javascript") //7
-	jsTemplate.Execute(w, wsAddr)                            //8
+		fmt.Println(string(p))
+
+		if err := conn.WriteMessage(messageType, p); err != nil {
+			log.Panicln(err)
+			return
+		}
+	}
 }
 
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/ws", serveWS)     //9
-	r.HandleFunc("/k.js", serveFile) //10
-	log.Fatal(http.ListenAndServe(":8080", r))
+	http.HandleFunc("/todo", func(w http.ResponseWriter, r *http.Request) {
+		wsEndpoint(w, r)
+	})
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "websockets.html")
+	})
+
+	http.ListenAndServe(":8080", nil)
+
 }

@@ -7,7 +7,6 @@ use ./roundrobin/
 use ./gorillaserver/
 use ./harvestserver/
 use ./websocketserver/
-use ./websocketclient/
 use ./tcpsocket/
 use ./udpsocketserver/
 use ./udpsocketclient/
