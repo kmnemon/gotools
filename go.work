@@ -10,3 +10,5 @@ use ./websocketserver/
 use ./tcpsocket/
 use ./udpsocketserver/
 use ./udpsocketclient/
+use ./testserver/
+use ./testclient/
